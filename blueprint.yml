@@ -1,0 +1,6 @@
+---
+kube_config: "kube_config.yml"
+output: "json"
+objects:
+  - Nodes
+  - Containers
