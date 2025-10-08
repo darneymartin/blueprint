@@ -1,7 +1,7 @@
 import yaml
 import os
 
-class Configuration:
+class Configuration():
     """
     Handles application configuration from a YAML file,
     with overrides from environment variables.
@@ -15,6 +15,7 @@ class Configuration:
         """
         self._config = self._load_from_yaml(yaml_path)
         self._override_with_env(self._config)
+        return None
 
     def _load_from_yaml(self, yaml_path: str) -> dict:
         """Loads the base configuration from a YAML file."""
@@ -25,6 +26,21 @@ class Configuration:
             raise Exception(f"Configuration file not found at: {yaml_path}")
         except yaml.YAMLError as e:
             raise Exception(f"Error parsing YAML file: {e}")
+    
+    def get_output(self) -> str:
+        env_value = os.getenv("BLUEPRINT_OUTPUT", None)
+        config_value = self._config.get("output")
+        default_value = "json"
+        if env_value is not None:
+            return env_value
+        elif config_value is not None:
+            return config_value
+        else:
+            return default_value
+
+
+
+
 
     def _override_with_env(self, config_dict: dict, prefix: str = ''):
         """
@@ -48,17 +64,5 @@ class Configuration:
                     except ValueError:
                         config_dict[key] = env_value # Keep as string if cast fails
 
-    def get(self, key_path: str, default=None):
-        """
-        Retrieves a configuration value using dot notation.
-        Example: get('database.host')
-        """
-        keys = key_path.split('.')
-        value = self._config
-        try:
-            for key in keys:
-                value = value[key]
-            return value
-        except (TypeError, KeyError):
-            return default
+
 

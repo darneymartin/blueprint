@@ -6,7 +6,7 @@ Blueprint is a tool that can be used to connect to a Kubernetes Cluster and gene
 ### Configuration
 Currently Supported Attributes for configuration:
 - `kube_config` - Location of Kubernetes Configuration
-- `output` - Output format of application (json)
+- `output` - Output format of application (json, text)
 - `objects` - Currently not configurable, added for future capability 
 
 ```YAML
@@ -23,8 +23,9 @@ objects:
 The following Environment Variables are supported by the application:
 
 - `BLUEPRINT_CONFIG` - Path to the YAML configuration file for the application defaults to: `blueprint.yml`
+- `BLUEPRINT_OUTPUT` - Output format for the application defaults to: `json`
 
-
+Note: Environment Variables override Configuration File Variables.
 
 
 ### Running via Locally

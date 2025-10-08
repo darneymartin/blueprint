@@ -10,15 +10,16 @@ from models.nodes import Nodes
 from models.containers import Containers
 
 # Import Output
-from output.output import output
+from output import Output
 
 
 
 if __name__ == "__main__":
 
+    # Setup Configuration
     CONFIG = os.getenv("BLUEPRINT_CONFIG", default="blueprint.yml")
     configuration = Configuration(CONFIG)
-
+    
     api = Kubernetes.connect(None)
     containers = Containers.get_containers(api)
     nodes = Nodes.get_nodes(api)
@@ -28,6 +29,5 @@ if __name__ == "__main__":
     data['containers'] = containers
     data['nodes'] = nodes
 
-    configuration = None
-    output(data, configuration)
+    Output(data, configuration.get_output())
     exit(0)
