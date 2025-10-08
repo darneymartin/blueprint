@@ -1,1 +1,6 @@
-kube_config.yml
+kube_config.yml*
+Makefile
+.venv
+.python-version
+__pycache__
+.pytest_cache
